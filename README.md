@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="Assets/Preview/icon.png" width="120" alt="PeachPocket peach tucked into a pocket icon">
+  <img src="Assets/Preview/icon.png" width="120" alt="PeachPocket pixel-art peach tucked into a denim pocket">
 </p>
 
 # PeachPocket
@@ -23,7 +23,7 @@ sh build.sh
 open build/PeachPocket.app
 ```
 
-Click the peach pocket in the menu bar, choose **Enable PeachPocket…**, and finish the one-time helper installation. macOS controls whether Touch ID or a password is required. The pocket is outlined at rest and filled while awake.
+Click the peach pocket in the menu bar, choose **Enable PeachPocket…**, and finish the one-time helper installation. macOS controls whether Touch ID or a password is required. The menu-bar pocket is outlined at rest and filled while awake. The full-color pixel-art logo and app icon use PeachPocket’s own peach-in-pocket composition, with rendering inspired by [LemonCute](https://lemoncute.com).
 
 These are local, ad-hoc-signed builds, not notarized releases. The build script uses the current machine's architecture.
 
@@ -83,8 +83,8 @@ Physical vibration uses Apple's **private MultitouchSupport framework**, isolate
 | Path | Responsibility |
 | --- | --- |
 | `Sources/` | SwiftUI/AppKit interface, pattern editor, reminders, helper client, and models |
-| `Sources/Mark.swift` | Handcrafted peach-and-pocket app artwork |
-| `Assets/Icon/` | Original peach-and-pocket menu-bar vectors |
+| `Sources/Mark.swift` | Logo loading and monochrome menu-bar states |
+| `Assets/Icon/` | Generated pixel-art logo, generation prompt, and small menu-bar vectors |
 | `Helper/main.swift` | Privileged sleep-control daemon and recovery |
 | `Bridge/main.swift` | Stable signed XPC client |
 | `Native/Haptic.c` | Isolated physical trackpad actuator |

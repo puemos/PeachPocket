@@ -306,16 +306,17 @@ struct PeachPocketView: View {
   }
   func exportIcon() {
     let directory = CommandLine.arguments.last ?? "/tmp"
-    let view = AppIconView()
-    let host = NSHostingView(rootView: view)
-    host.frame = NSRect(x: 0, y: 0, width: 1134, height: 1134)
-    host.layoutSubtreeIfNeeded()
-    if let bitmap = host.bitmapImageRepForCachingDisplay(in: host.bounds) {
-      host.cacheDisplay(in: host.bounds, to: bitmap)
-      if let data = bitmap.representation(using: .png, properties: [:]) {
-        try? data.write(
-          to: URL(fileURLWithPath: directory).appendingPathComponent("icon-master.png"))
-      }
+    guard let source = Bundle.main.url(forResource: "peachpocket-pixel", withExtension: "png"),
+      let data = try? Data(contentsOf: source)
+    else {
+      FileHandle.standardError.write(Data("Missing PeachPocket artwork.\n".utf8))
+      exit(1)
+    }
+    do {
+      try data.write(to: URL(fileURLWithPath: directory).appendingPathComponent("icon-master.png"))
+    } catch {
+      FileHandle.standardError.write(Data((error.localizedDescription + "\n").utf8))
+      exit(1)
     }
     NSApp.terminate(nil)
   }

@@ -6,6 +6,7 @@ mkdir -p "$app/Contents/MacOS" "$app/Contents/Resources" build/module-cache
 arch="$(uname -m)"
 rm -f "$app/Contents/Resources/"*.svg
 cp Assets/Icon/*.svg "$app/Contents/Resources/"
+cp Assets/Icon/peachpocket-pixel.png "$app/Contents/Resources/"
 /usr/bin/swiftc -swift-version 5 -O -module-cache-path "$PWD/build/module-cache" -target "$arch-apple-macosx14.0" Sources/Shared.swift Sources/SessionPolicy.swift Helper/main.swift -o "$app/Contents/Resources/PeachPocketHelper" -framework Foundation -framework IOKit -framework Security
 /usr/bin/codesign --force --options runtime --sign - "$app/Contents/Resources/PeachPocketHelper"
 /usr/bin/shasum -a 256 "$app/Contents/Resources/PeachPocketHelper" | /usr/bin/awk '{print $1}' > "$app/Contents/Resources/HelperSHA256.txt"
@@ -28,8 +29,8 @@ cat > "$app/Contents/Info.plist" <<'PLIST'
 <key>CFBundleDisplayName</key><string>PeachPocket</string>
 <key>CFBundleExecutable</key><string>PeachPocket</string>
 <key>CFBundlePackageType</key><string>APPL</string>
-<key>CFBundleShortVersionString</key><string>0.4.0</string>
-<key>CFBundleVersion</key><string>4</string>
+<key>CFBundleShortVersionString</key><string>0.4.1</string>
+<key>CFBundleVersion</key><string>5</string>
 <key>LSMinimumSystemVersion</key><string>14.0</string>
 <key>LSUIElement</key><true/>
 <key>NSHighResolutionCapable</key><true/>

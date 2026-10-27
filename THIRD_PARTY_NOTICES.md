@@ -22,6 +22,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-The icon artwork in `Sources/Mark.swift` and `Assets/Icon/` is original to
-PeachPocket and covered by the repository's MIT license. No third-party icon
+The monochrome menu-bar vectors in `Assets/Icon/` are original to PeachPocket.
+The full-color `peachpocket-pixel.png` artwork was generated for PeachPocket
+using LemonCute's public logo as a pixel-rendering style reference and
+PeachPocket's existing peach-in-pocket composition as the design reference.
+The generation prompt is stored alongside the asset. No third-party icon
 library is bundled.
