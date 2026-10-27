@@ -28,7 +28,7 @@ import Foundation
     check(
       "strength does not change selected preset",
       VibrationPattern(strength: .gentle).preset == .knock)
-    let suite = "local.lidlight.tests." + UUID().uuidString
+    let suite = "local.peachpocket.tests." + UUID().uuidString
     let defaults = UserDefaults(suiteName: suite)!
     defer { defaults.removePersistentDomain(forName: suite) }
     custom.save(to: defaults)

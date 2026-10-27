@@ -23,5 +23,5 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 The icon artwork in `Sources/Mark.swift` and `Assets/Icon/` is original to
-Lidlight and covered by the repository's MIT license. No third-party icon
+PeachPocket and covered by the repository's MIT license. No third-party icon
 library is bundled.

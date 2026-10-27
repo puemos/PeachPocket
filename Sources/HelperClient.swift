@@ -31,7 +31,8 @@ import Security
   func request(_ command: String, duration: Int = 0, completion: @escaping (HelperStatus?) -> Void)
   {
     if process == nil {
-      guard let binary = Bundle.main.url(forResource: "LidlightBridge", withExtension: nil) else {
+      guard let binary = Bundle.main.url(forResource: "PeachPocketBridge", withExtension: nil)
+      else {
         completion(nil)
         return
       }
@@ -107,7 +108,7 @@ import Security
 
   private static func bridgeHash() throws -> String {
     var code: SecStaticCode?
-    guard let bridge = Bundle.main.url(forResource: "LidlightBridge", withExtension: nil),
+    guard let bridge = Bundle.main.url(forResource: "PeachPocketBridge", withExtension: nil),
       SecStaticCodeCreateWithPath(bridge as CFURL, [], &code) == errSecSuccess, let code
     else { throw InstallerError.signature }
     var info: CFDictionary?
@@ -139,7 +140,7 @@ import Security
   }
   static func install(scriptDestination: URL? = nil, completion: @escaping (String?) -> Void) {
     do {
-      guard let helper = Bundle.main.url(forResource: "LidlightHelper", withExtension: nil),
+      guard let helper = Bundle.main.url(forResource: "PeachPocketHelper", withExtension: nil),
         let digestURL = Bundle.main.url(forResource: "HelperSHA256", withExtension: "txt")
       else { throw InstallerError.missing }
       let digest = try String(contentsOf: digestURL, encoding: .utf8).trimmingCharacters(
@@ -149,7 +150,7 @@ import Security
       }
       let hash = try bridgeHash()
       let folder = FileManager.default.temporaryDirectory.appendingPathComponent(
-        "LidlightSetup-" + UUID().uuidString)
+        "PeachPocketSetup-" + UUID().uuidString)
       let root = folder.appendingPathComponent("payload")
       let tools = root.appendingPathComponent("Library/PrivilegedHelperTools")
       let daemons = root.appendingPathComponent("Library/LaunchDaemons")
@@ -194,14 +195,15 @@ import Security
         try postinstall.write(to: scriptDestination, atomically: true, encoding: .utf8)
       }
       let package =
-        scriptDestination?.deletingLastPathComponent().appendingPathComponent("LidlightHelper.pkg")
-        ?? folder.appendingPathComponent("LidlightHelper.pkg")
+        scriptDestination?.deletingLastPathComponent().appendingPathComponent(
+          "PeachPocketSetup.pkg")
+        ?? folder.appendingPathComponent("PeachPocketSetup.pkg")
       let task = Process()
       let errors = Pipe()
       task.executableURL = URL(fileURLWithPath: "/usr/bin/pkgbuild")
       task.arguments = [
         "--root", root.path, "--scripts", scripts.path, "--identifier", "local.lidlight.helper",
-        "--version", "0.3.0", "--install-location", "/", "--ownership", "recommended", package.path,
+        "--version", "0.4.0", "--install-location", "/", "--ownership", "recommended", package.path,
       ]
       task.standardOutput = FileHandle.nullDevice
       task.standardError = errors
@@ -270,8 +272,8 @@ import Security
     case missing, signature
     var errorDescription: String? {
       switch self {
-      case .missing: return "Helper is missing or damaged. Rebuild Lidlight."
-      case .signature: return "Could not verify this build’s signature. Rebuild Lidlight."
+      case .missing: return "Helper is missing or damaged. Rebuild PeachPocket."
+      case .signature: return "Could not verify this build’s signature. Rebuild PeachPocket."
       }
     }
   }

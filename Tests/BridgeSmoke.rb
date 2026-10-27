@@ -2,7 +2,7 @@ require 'json'
 require 'open3'
 require 'timeout'
 
-bridge = File.expand_path('../build/Lidlight.app/Contents/Resources/LidlightBridge', __dir__)
+bridge = File.expand_path('../build/PeachPocket.app/Contents/Resources/PeachPocketBridge', __dir__)
 Open3.popen3(bridge) do |input, output, errors, process|
   sequence = 0
   request = lambda do |command, duration = 0|

@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="Assets/Preview/icon.png" width="120" alt="Lidlight porcelain coffee cup icon">
+  <img src="Assets/Preview/icon.png" width="120" alt="PeachPocket peach tucked into a pocket icon">
 </p>
 
-# Lidlight
+# PeachPocket
 
 A tiny native macOS menu-bar app that keeps your Mac awake and gives you a physical nudge when you close the lid.
 
@@ -12,7 +12,7 @@ A tiny native macOS menu-bar app that keeps your Mac awake and gives you a physi
 - Restore normal sleep after the lid stays closed for four seconds.
 - Set up the helper once through macOS Installer, with Touch ID when available. Daily toggles need no password.
 
-<img src="Assets/Preview/panel.png" width="268" alt="Lidlight menu-bar panel">
+<img src="Assets/Preview/panel.png" width="268" alt="PeachPocket menu-bar panel">
 
 ## Build and run
 
@@ -20,10 +20,10 @@ Requires macOS 14 or later and Xcode Command Line Tools. Physical vibration requ
 
 ```sh
 sh build.sh
-open build/Lidlight.app
+open build/PeachPocket.app
 ```
 
-Click the cup in the menu bar, choose **Enable Lidlight…**, and finish the one-time helper installation. macOS controls whether Touch ID or a password is required. The cup is outlined at rest and filled while awake.
+Click the peach pocket in the menu bar, choose **Enable PeachPocket…**, and finish the one-time helper installation. macOS controls whether Touch ID or a password is required. The pocket is outlined at rest and filled while awake.
 
 These are local, ad-hoc-signed builds, not notarized releases. The build script uses the current machine's architecture.
 
@@ -50,7 +50,7 @@ An authorized session sets `pmset -a disablesleep 1`. The helper restores `pmset
 
 Reopening during the lid-close grace period continues the session. The app also requests restoration if macOS reports serious or critical thermal pressure.
 
-If another tool disabled sleep first, Lidlight offers **Restore sleep** before starting a protected session. Manual recovery is:
+If another tool disabled sleep first, PeachPocket offers **Restore sleep** before starting a protected session. Manual recovery is:
 
 ```sh
 sudo pmset -a disablesleep 0
@@ -61,6 +61,8 @@ Restoring normal sleep lets macOS apply its usual policy; other apps and externa
 ### Permissions
 
 The root helper accepts only fixed sleep-control operations from the installing user's signed bridge. It does not execute caller-provided shell commands. The bridge uses XPC; the app communicates with it over pipes. The helper's timer is dormant outside sessions and recovery attempts.
+
+Existing installations retain their internal `local.lidlight.*` service and app identifiers to preserve helper authorization and saved settings. The app, installer, icons, and repository use PeachPocket.
 
 Installed files:
 
@@ -81,8 +83,8 @@ Physical vibration uses Apple's **private MultitouchSupport framework**, isolate
 | Path | Responsibility |
 | --- | --- |
 | `Sources/` | SwiftUI/AppKit interface, pattern editor, reminders, helper client, and models |
-| `Sources/Mark.swift` | Handcrafted porcelain-cup app artwork |
-| `Assets/Icon/` | Original menu-bar cup vectors |
+| `Sources/Mark.swift` | Handcrafted peach-and-pocket app artwork |
+| `Assets/Icon/` | Original peach-and-pocket menu-bar vectors |
 | `Helper/main.swift` | Privileged sleep-control daemon and recovery |
 | `Bridge/main.swift` | Stable signed XPC client |
 | `Native/Haptic.c` | Isolated physical trackpad actuator |
@@ -93,7 +95,7 @@ Physical vibration uses Apple's **private MultitouchSupport framework**, isolate
 ```sh
 sh test.sh
 sh build.sh
-codesign --verify --deep --strict build/Lidlight.app
+codesign --verify --deep --strict build/PeachPocket.app
 ```
 
 The default tests do not change power settings or actuate the trackpad. After installing the helper, opt into live checks:
@@ -112,8 +114,8 @@ The session checks refuse to replace an existing awake session. They use five-se
 Developer rendering and package checks:
 
 ```sh
-build/Lidlight.app/Contents/MacOS/Lidlight --render-preview "$PWD/build"
-build/Lidlight.app/Contents/MacOS/Lidlight --installer-check "$PWD/build"
+build/PeachPocket.app/Contents/MacOS/PeachPocket --render-preview "$PWD/build"
+build/PeachPocket.app/Contents/MacOS/PeachPocket --installer-check "$PWD/build"
 sh -n build/installer-check.sh
 ```
 

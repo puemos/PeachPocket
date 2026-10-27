@@ -90,6 +90,7 @@ struct PatternEditor: View {
     }
     .frame(width: 460, height: 390)
     .background(Color(nsColor: .windowBackgroundColor))
+    .tint(Brand.accent)
   }
 }
 
@@ -106,7 +107,7 @@ struct PatternEditor: View {
       contentRect: NSRect(x: 0, y: 0, width: 460, height: 390), styleMask: [.titled, .closable],
       backing: .buffered, defer: false)
     window.delegate = self
-    window.title = "Vibration pattern"
+    window.title = "PeachPocket · Vibration pattern"
     window.isReleasedWhenClosed = false
     window.contentViewController = NSHostingController(
       rootView: PatternEditor(

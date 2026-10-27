@@ -21,12 +21,13 @@ import Combine
   }
   @Published var vibration = VibrationPattern.load() {
     didSet {
-      vibration.save()
+      if !isPreview { vibration.save() }
       reminder.pattern = vibration
     }
   }
   let client = HelperClient()
   let reminder = Reminder()
+  private let isPreview: Bool
   private var timer: Timer?
   private var refreshing = false
   private var wasClosed = false
@@ -34,6 +35,8 @@ import Combine
   var onStopped: (() -> Void)?
 
   init(preview: Bool = false) {
+    isPreview = preview
+    if preview { vibration = VibrationPattern() }
     reminder.speakersOnly = useSpeakers
     reminder.pattern = vibration
     reminder.resultHandler = { [weak self] message in self?.feedback = message }
@@ -48,12 +51,12 @@ import Combine
     if busy { return "Preparing setup…" }
     if setupPending { return "Finish setup in Installer" }
     if active { return remaining.isEmpty ? "Awake until stopped" : "Awake · " + remaining }
-    if externalDisabled { return "Sleep disabled outside Lidlight" }
+    if externalDisabled { return "Sleep disabled outside PeachPocket" }
     return helperReady ? "Normal sleep" : "One-time setup needed"
   }
   var action: String {
     if setupPending { return "Open Installer…" }
-    if !helperReady { return HelperInstaller.installed ? "Update helper…" : "Enable Lidlight…" }
+    if !helperReady { return HelperInstaller.installed ? "Update helper…" : "Enable PeachPocket…" }
     return externalDisabled ? "Restore sleep" : "Keep awake"
   }
   func toggle() {

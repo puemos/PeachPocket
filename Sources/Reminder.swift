@@ -84,8 +84,8 @@ import CoreAudio
   func playHaptic() -> String {
     if let error = pattern.error { return error }
     guard hapticTask == nil else { return "Trackpad vibration is already running." }
-    guard let binary = Bundle.main.url(forResource: "LidlightHaptic", withExtension: nil) else {
-      return "Vibration tool missing. Rebuild Lidlight."
+    guard let binary = Bundle.main.url(forResource: "PeachPocketHaptic", withExtension: nil) else {
+      return "Vibration tool missing. Rebuild PeachPocket."
     }
     let task = Process()
     let output = Pipe()

@@ -3,7 +3,7 @@ import Carbon
 import Combine
 import SwiftUI
 
-struct LidlightView: View {
+struct PeachPocketView: View {
   @ObservedObject var power: PowerController
   var quit: () -> Void = {}
   var editPattern: () -> Void = {}
@@ -14,7 +14,7 @@ struct LidlightView: View {
         MarkView(active: power.active).foregroundStyle(.primary)
           .frame(width: 24, height: 24)
         VStack(alignment: .leading, spacing: 2) {
-          Text("Lidlight").font(.system(size: 13, weight: .semibold))
+          Text("PeachPocket").font(.system(size: 13, weight: .semibold))
           Text(power.status).font(.system(size: 10)).monospacedDigit().foregroundStyle(.secondary)
             .lineLimit(1)
         }
@@ -76,17 +76,18 @@ struct LidlightView: View {
           Button("Update helper…", action: power.install).disabled(power.busy || power.active)
           Button("Remove helper…", action: power.removeHelper).disabled(power.busy || power.active)
           Divider()
-          Button("Quit Lidlight", action: quit)
+          Button("Quit PeachPocket", action: quit)
         } label: {
           Image(systemName: "gearshape").font(.system(size: 11))
         }
         .menuStyle(.borderlessButton).menuIndicator(.hidden).fixedSize()
-        .accessibilityLabel("Lidlight settings")
+        .accessibilityLabel("PeachPocket settings")
       }
     }
     .padding(12)
     .frame(width: 268, height: 212, alignment: .topLeading)
     .background(.regularMaterial)
+    .tint(Brand.accent)
   }
 }
 
@@ -139,7 +140,7 @@ struct LidlightView: View {
     status.button?.target = self
     status.button?.action = #selector(showPopover)
     let host = NSHostingController(
-      rootView: LidlightView(
+      rootView: PeachPocketView(
         power: power, quit: { NSApp.terminate(nil) },
         editPattern: { [weak self] in
           guard let self else { return }
@@ -158,8 +159,9 @@ struct LidlightView: View {
       self?.status.button?.image = MarkImage.menu(active: active || external)
       self?.status.button?.toolTip =
         active
-        ? "Lidlight · Awake · ⌃⌥⌘K"
-        : external ? "Lidlight · Sleep disabled outside app" : "Lidlight · Normal sleep · ⌃⌥⌘K"
+        ? "PeachPocket · Awake · ⌃⌥⌘K"
+        : external
+          ? "PeachPocket · Sleep disabled outside app" : "PeachPocket · Normal sleep · ⌃⌥⌘K"
     }
     var event = EventTypeSpec(
       eventClass: OSType(kEventClassKeyboard), eventKind: UInt32(kEventHotKeyPressed))
@@ -257,7 +259,7 @@ struct LidlightView: View {
       power.remaining = "28:42"
       let name = ["setup", "rest", "awake", "restore"][mode]
       for dark in [false, true] {
-        let view = LidlightView(power: power).environment(\.colorScheme, dark ? .dark : .light)
+        let view = PeachPocketView(power: power).environment(\.colorScheme, dark ? .dark : .light)
         let host = NSHostingView(rootView: view)
         let window = NSWindow(
           contentRect: NSRect(x: 0, y: 0, width: 268, height: 212), styleMask: [.borderless],
@@ -319,7 +321,7 @@ struct LidlightView: View {
   }
 }
 
-@main struct LidlightApp {
+@main struct PeachPocketApp {
   @MainActor static func main() {
     let app = NSApplication.shared
     app.setActivationPolicy(.accessory)

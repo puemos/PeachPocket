@@ -15,12 +15,12 @@ def ping(client)
   end
 end
 
-bridge = File.expand_path('../build/Lidlight.app/Contents/Resources/LidlightBridge', __dir__)
+bridge = File.expand_path('../build/PeachPocket.app/Contents/Resources/PeachPocketBridge', __dir__)
 raise 'Install or update the helper before running this check' unless ping(bridge)['status']
-Dir.mktmpdir('lidlight-untrusted-') do |directory|
+Dir.mktmpdir('peachpocket-untrusted-') do |directory|
   client = File.join(directory, 'untrusted-client')
   FileUtils.cp(bridge, client)
-  output, error, result = Open3.capture3('/usr/bin/codesign', '--force', '--options', 'runtime', '--identifier', 'local.lidlight.test.untrusted', '--sign', '-', client)
+  output, error, result = Open3.capture3('/usr/bin/codesign', '--force', '--options', 'runtime', '--identifier', 'local.peachpocket.test.untrusted', '--sign', '-', client)
   raise "Could not prepare test client: #{output} #{error}" unless result.success?
   raise 'Helper accepted a client with the wrong code signature' if ping(client)['status']
   puts 'PASS trusted bridge connects and helper rejects a differently signed same-user client'
